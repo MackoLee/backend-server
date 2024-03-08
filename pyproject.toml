@@ -1,0 +1,101 @@
+[tool.poetry]
+name = "application"
+version = "0.1.0"
+description = ""
+authors = [
+
+]
+maintainers = [
+
+]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = "^0.100.0"
+uvicorn = { version = "^0.22.0", extras = ["standard"] }
+pydantic = { version = "^1", extras = ["dotenv"] }
+yarl = "^1.9.2"
+ujson = "^5.8.0"
+SQLAlchemy = { version = "^2.0.18", extras = ["asyncio"] }
+httptools = "^0.6.0"
+strawberry-graphql = { version = "^0.219.2", extras = ["fastapi"] }
+loguru = "^0.7.0"
+oracledb = "^2.0.1"
+passlib = { version = "^1.7.4", extras = ["bcrypt"] }
+pyjwt = "^2.8.0"
+
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.2.1"
+flake8 = "^6.0.0"
+mypy = "^1.1.1"
+isort = "^5.11.4"
+pre-commit = "^3.0.1"
+wemake-python-styleguide = "^0.18.0"
+black = "^22.12.0"
+autoflake = "^1.6.1"
+pytest-cov = "^4.0.0"
+anyio = "^3.6.2"
+pytest-env = "^0.8.1"
+httpx = "^0.23.3"
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+src_paths = ["application", ]
+
+[tool.mypy]
+strict = true
+ignore_missing_imports = true
+allow_subclassing_any = true
+allow_untyped_calls = true
+pretty = true
+show_error_codes = true
+implicit_reexport = true
+allow_untyped_decorators = true
+warn_unused_ignores = false
+warn_return_any = false
+namespace_packages = true
+plugins = ["strawberry.ext.mypy_plugin"]
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "error",
+    "ignore::DeprecationWarning",
+    "ignore:.*unclosed.*:ResourceWarning",
+]
+env = [
+    "APPLICATION_ENVIRONMENT=pytest",
+    "APPLICATION_DB_BASE=application_test",
+]
+
+[fastapi-template.options]
+project_name = "application"
+api_type = "graphql"
+enable_redis = "None"
+enable_rmq = "None"
+ci_type = "github"
+enable_migrations = "None"
+enable_taskiq = "None"
+enable_kube = "None"
+kube_name = "application"
+enable_routers = "True"
+enable_kafka = "None"
+enable_loguru = "True"
+traefik_labels = "None"
+add_dummy = "True"
+orm = "sqlalchemy"
+self_hosted_swagger = "None"
+prometheus_enabled = "None"
+sentry_enabled = "None"
+otlp_enabled = "None"
+pydanticv1 = "True"
+gunicorn = "None"
+add_users = "None"
+cookie_auth = "None"
+jwt_auth = "None"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

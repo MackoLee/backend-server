@@ -1,0 +1,45 @@
+version: '3.9'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./deploy/Dockerfile
+      target: prod
+    image: application:${APPLICATION_VERSION:-latest}
+    restart: always
+    env_file:
+    - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      APPLICATION_HOST: 0.0.0.0
+      APPLICATION_DB_HOST: application-db
+      APPLICATION_DB_PORT: 3306
+      APPLICATION_DB_USER: application
+      APPLICATION_DB_PASS: application
+      APPLICATION_DB_BASE: application
+
+  db:
+    image: bitnami/mysql:8.0.30
+    hostname: application-db
+    restart: always
+    environment:
+      MYSQL_ROOT_USER: "application"
+      MYSQL_ROOT_PASSWORD: "application"
+      MYSQL_DATABASE: "application"
+      MYSQL_AUTHENTICATION_PLUGIN: "mysql_native_password"
+    healthcheck:
+      test: mysqladmin ping -h localhost
+      interval: 10s
+      timeout: 5s
+      retries: 40
+    volumes:
+    - application-db-data:/bitnami/mysql/data
+
+
+
+volumes:
+  application-db-data:
+    name: application-db-data
