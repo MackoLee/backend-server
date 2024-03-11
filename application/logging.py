@@ -8,8 +8,7 @@ from application.settings import settings
 
 
 class InterceptHandler(logging.Handler):
-    """
-    Default handler from examples in loguru documentation.
+    """Default handler from examples in loguru documentation.
 
     This handler intercepts all log requests and
     passes them to loguru.
